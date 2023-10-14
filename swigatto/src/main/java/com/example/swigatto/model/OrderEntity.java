@@ -5,7 +5,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
@@ -27,4 +29,19 @@ public class OrderEntity {
 
     @CreationTimestamp
     Date orderTime;
+
+    @ManyToOne
+    @JoinColumn
+    Customer customer;
+
+    @ManyToOne
+    @JoinColumn
+    DeliveryPartner deliveryPartner;
+
+    @ManyToOne
+    @JoinColumn
+    Restaurant restaurant;
+
+    @OneToMany(mappedBy ="order", cascade = CascadeType.ALL)
+    List<FoodItems> foodItems = new ArrayList<>();
 }

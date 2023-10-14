@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,4 +29,8 @@ public class DeliveryPartner {
 
     @Enumerated(EnumType.STRING)
     Gender gender;
+
+
+    @OneToMany(mappedBy = "deliveryPartner", cascade = CascadeType.ALL)
+    List<OrderEntity> orders= new ArrayList<>();
 }

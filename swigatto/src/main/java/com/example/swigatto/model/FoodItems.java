@@ -30,4 +30,17 @@ public class FoodItems {
     boolean veg;
 
     boolean available;
+
+    @ManyToOne
+    @JoinColumn
+    Cart cart;
+
+    @ManyToOne
+    @JoinColumn
+    Restaurant restaurant;
+
+    @ManyToOne
+    @JoinColumn
+    OrderEntity order;
+
 }

@@ -1,9 +1,14 @@
 package com.example.swigatto.model;
 
+import com.example.swigatto.Enum.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
@@ -21,6 +26,8 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Size(min=5, message = "{validation.name.size.too_short}")
+    @Size(max=40,message = "{validation.name.size.too_long}")
     String name;
 
     @Email
@@ -30,7 +37,17 @@ public class Customer {
     String address;
 
     @Column(unique= true, nullable = false)
+    @Size(min = 10, max = 10)
     String mobileNo;
 
+    @Enumerated(EnumType.STRING)
+    Gender gender;
+
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    Cart cart;
+
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    List<OrderEntity> orders = new ArrayList<>();
 
 }
