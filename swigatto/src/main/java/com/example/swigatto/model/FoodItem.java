@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Table(name = "food_item")
 
-public class FoodItems {
+public class FoodItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class FoodItems {
     double price;
 
     @Enumerated(EnumType.STRING)
-    FoodCategory foodCategory;
+    FoodCategory category;
 
     boolean veg;
 
