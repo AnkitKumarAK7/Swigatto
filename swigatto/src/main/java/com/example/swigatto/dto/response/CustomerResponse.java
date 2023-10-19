@@ -18,6 +18,4 @@ public class CustomerResponse {
     String address;
 
     CartResponse cart;
-
-
 }

@@ -2,6 +2,7 @@ package com.example.swigatto.model;
 
 import com.example.swigatto.Enum.Gender;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -25,6 +26,7 @@ public class DeliveryPartner {
     String name;
 
     @Column(unique = true, nullable = false)
+    @Size(min = 10 , max = 10)
     String mobileNo;
 
     @Enumerated(EnumType.STRING)

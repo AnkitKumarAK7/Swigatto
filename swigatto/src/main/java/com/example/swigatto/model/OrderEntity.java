@@ -23,7 +23,7 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    String orderId;
+    String orderId;   // UUID
 
     int orderTotal;
 

@@ -10,9 +10,8 @@ public class FoodItemTransformer {
         return FoodResponse.builder()
                 .dishName(foodItem.getDishName())
                 .price(foodItem.getPrice())
-                .category(foodItem.getCategory())
                 .veg(foodItem.isVeg())
+                .category(foodItem.getCategory())
                 .build();
     }
-
 }

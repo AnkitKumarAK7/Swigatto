@@ -8,5 +8,5 @@ public enum RestaurantCategory {
     PIZZA_OUTLET,
     SPANISH,
     FAST_FOOD,
-    BIRYANI
+    BIRYANI_POINT
 }

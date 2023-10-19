@@ -13,8 +13,6 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-//@Getter
-//@Setter
 @Entity
 @Builder
 @Data
@@ -26,7 +24,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @Size(min=5, message = "{validation.name.size.too_short}")
+    @Size(min=2, message = "{validation.name.size.too_short}")
     @Size(max=40,message = "{validation.name.size.too_long}")
     String name;
 

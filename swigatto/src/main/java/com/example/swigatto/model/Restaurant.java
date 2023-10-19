@@ -27,11 +27,12 @@ public class Restaurant {
 
     String location;
 
+    @Enumerated(EnumType.STRING)
     RestaurantCategory restaurantCategory;
 
     @Column(unique= true, nullable = false)
     @Size(min = 10, max = 10)
-    String contactNo;
+    String contactNumber;
 
     boolean opened;
 

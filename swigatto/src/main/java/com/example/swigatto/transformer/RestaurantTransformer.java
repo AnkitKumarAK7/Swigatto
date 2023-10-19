@@ -1,10 +1,8 @@
 package com.example.swigatto.transformer;
 
-import com.example.swigatto.controller.RestaurantController;
 import com.example.swigatto.dto.request.RestaurantRequest;
 import com.example.swigatto.dto.response.FoodResponse;
 import com.example.swigatto.dto.response.RestaurantResponse;
-import com.example.swigatto.model.FoodItem;
 import com.example.swigatto.model.Restaurant;
 
 import java.util.ArrayList;
@@ -17,9 +15,9 @@ public class RestaurantTransformer {
 
         return Restaurant.builder()
                 .name(restaurantRequest.getName())
+                .contactNumber(restaurantRequest.getContactNumber())
                 .location(restaurantRequest.getLocation())
                 .restaurantCategory(restaurantRequest.getRestaurantCategory())
-                .contactNo(restaurantRequest.getContactNo())
                 .opened(true)
                 .availableFoodItems(new ArrayList<>())
                 .orders(new ArrayList<>())
@@ -35,7 +33,7 @@ public class RestaurantTransformer {
 
         return RestaurantResponse.builder()
                 .name(restaurant.getName())
-                .contactNumber(restaurant.getContactNo())
+                .contactNumber(restaurant.getContactNumber())
                 .location(restaurant.getLocation())
                 .opened(restaurant.isOpened())
                 .menu(menu)

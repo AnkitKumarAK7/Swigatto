@@ -6,11 +6,10 @@ import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
 @Builder
-
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class RestaurantResponse {
 

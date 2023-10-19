@@ -1,15 +1,14 @@
 package com.example.swigatto.dto.request;
 
 import com.example.swigatto.Enum.RestaurantCategory;
-import com.example.swigatto.model.Restaurant;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class RestaurantRequest {
 
@@ -19,5 +18,5 @@ public class RestaurantRequest {
 
     RestaurantCategory restaurantCategory;
 
-    String contactNo;
+    String contactNumber;
 }
