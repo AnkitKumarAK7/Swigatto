@@ -1,5 +1,6 @@
 package com.example.swigatto.controller;
 
+import com.example.swigatto.dto.request.FoodRequest;
 import com.example.swigatto.dto.request.RestaurantRequest;
 import com.example.swigatto.dto.response.RestaurantResponse;
 import com.example.swigatto.service.RestaurantService;
@@ -28,7 +29,15 @@ public class  RestaurantController {
     @PutMapping("/update/status")
     public ResponseEntity changeOpenedStatus(@RequestParam int id){
         String message = restaurantService.changeOpenedStatus(id);
+        return new ResponseEntity(message, HttpStatus.ACCEPTED);
 
-        }
     }
+
+     @PostMapping("/add/food")
+    public ResponseEntity addFoodItemToRestaurant(@RequestBody FoodRequest foodRequest){
+        RestaurantResponse restaurantResponse = restaurantService.addFoodItemToRestaurant(foodRequest);
+        return new ResponseEntity(restaurantResponse, HttpStatus.CREATED);
+    }
+
+    // get menu of a restaurant
 }
