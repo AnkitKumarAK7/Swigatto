@@ -13,8 +13,8 @@ import java.util.List;
 
 public class CartResponse {
 
-    int cartTotal;
+    double cartTotal;
 
-    List<FoodResponse> foodItems;
+    List<MenuResponse> foodItems;
 
 }

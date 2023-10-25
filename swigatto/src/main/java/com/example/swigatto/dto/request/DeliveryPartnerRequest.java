@@ -1,7 +1,9 @@
 package com.example.swigatto.dto.request;
 
+import com.example.swigatto.Enum.Gender;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
@@ -9,11 +11,11 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Builder
 
-public class FoodRequest {
+public class DeliveryPartnerRequest {
 
-    int requiredQuantity;
+    String name;
 
-    String customerMobile;
+    String mobileNo;
 
-    int menuItemId;
+    Gender gender;
 }
