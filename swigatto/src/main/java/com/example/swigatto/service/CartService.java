@@ -5,14 +5,12 @@ import com.example.swigatto.dto.response.CartStatusResponse;
 import com.example.swigatto.dto.response.FoodResponse;
 import com.example.swigatto.exception.CustomerNotFoundException;
 import com.example.swigatto.exception.MenuItemNotFoundException;
-import com.example.swigatto.model.Cart;
-import com.example.swigatto.model.Customer;
-import com.example.swigatto.model.FoodItem;
-import com.example.swigatto.model.MenuItem;
+import com.example.swigatto.model.*;
 import com.example.swigatto.repository.CartRepository;
 import com.example.swigatto.repository.CustomerRepository;
 import com.example.swigatto.repository.FoodRepository;
 import com.example.swigatto.repository.MenuRepository;
+import com.example.swigatto.transformer.FoodTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,25 +53,58 @@ public class CartService {
            throw new MenuItemNotFoundException("Given dish is out of Stock for now!!!");
         }
 
-        // ready to add item to cart
-        FoodItem foodItem = FoodItem.builder()
-                .menuItem(menuItem)
-                .requiredQuantity(foodRequest.getRequiredQuantity())
-                .totalCost(foodRequest.getRequiredQuantity()*menuItem.getPrice())
-                .build();
-
         Cart cart = customer.getCart();
-        FoodItem savedFoodItem = foodRepository.save(foodItem);
+
+        // having item from same restaurant
+        if(cart.getFoodItems().size()!= 0) {
+            Restaurant currRestaurant = cart.getFoodItems().get(0).getMenuItem().getRestaurant();
+            Restaurant newRestaurant = menuItem.getRestaurant();
+
+            if (!currRestaurant.equals(newRestaurant)) {
+                List<FoodItem> foodItems = cart.getFoodItems();
+                for(FoodItem foodItem: foodItems){
+                  foodItem.setCart(null);
+                  foodItem.setOrder(null);
+                  foodItem.setMenuItem(null);
+                }
+                foodRepository.deleteAll(foodItems);
+                cart.setCartTotal(0);
+                cart.getFoodItems().clear();
+            }
+        }
+
+        boolean alreadyExists = false;
+        FoodItem savedFoodItem = new FoodItem();
+
+        if(cart.getFoodItems().size()!=0){
+            for(FoodItem foodItem:cart.getFoodItems()){
+                if(foodItem.getMenuItem().getId()==menuItem.getId()){
+                    savedFoodItem = foodItem;
+                    int curr = foodItem.getRequiredQuantity();
+                    foodItem.setRequiredQuantity(curr+foodRequest.getRequiredQuantity());
+                    alreadyExists = true;
+                    break;
+                }
+            }
+        }
+        if(!alreadyExists) {
+            FoodItem foodItem = FoodItem.builder()
+                    .menuItem(menuItem)
+                    .requiredQuantity(foodRequest.getRequiredQuantity())
+                    .totalCost(foodRequest.getRequiredQuantity() * menuItem.getPrice())
+                    .build();
+
+           savedFoodItem = foodRepository.save(foodItem);
+           cart.getFoodItems().add(savedFoodItem);
+            menuItem.getFoodItems().add(savedFoodItem);
+            savedFoodItem.setCart(cart);
+        }
 
         double cartTotal = 0;
-        cart.getFoodItems().add(savedFoodItem);
         for(FoodItem food: cart.getFoodItems()){
             cartTotal += food.getRequiredQuantity()* food.getMenuItem().getPrice();
         }
-
-        savedFoodItem.setCart(cart);
         cart.setCartTotal(cartTotal);
-        menuItem.getFoodItems().add(savedFoodItem);
 
         // save
         Cart savedCart = cartRepository.save(cart);
@@ -82,15 +113,7 @@ public class CartService {
         // prepare
         List<FoodResponse> foodResponseList = new ArrayList<>();
         for(FoodItem food: cart.getFoodItems()){
-            FoodResponse foodResponse = FoodResponse.builder()
-                    .dishName(food.getMenuItem().getDishName())
-                    .price(food.getMenuItem().getPrice())
-                    .category(food.getMenuItem().getCategory())
-                    .veg(food.getMenuItem().isVeg())
-                    .quantityAdded(food.getRequiredQuantity())
-                    .build();
-
-            foodResponseList.add(foodResponse);
+            foodResponseList.add( FoodTransformer.FoodToFoodResponse(food));
         }
 
         return CartStatusResponse.builder()

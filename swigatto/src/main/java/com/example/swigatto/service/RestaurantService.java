@@ -7,7 +7,7 @@ import com.example.swigatto.exception.RestaurantNotFoundException;
 import com.example.swigatto.model.MenuItem;
 import com.example.swigatto.model.Restaurant;
 import com.example.swigatto.repository.RestaurantRepository;
-import com.example.swigatto.transformer.FoodItemTransformer;
+import com.example.swigatto.transformer.MenuItemTransformer;
 import com.example.swigatto.transformer.RestaurantTransformer;
 import com.example.swigatto.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +73,7 @@ public class RestaurantService {
 
         Restaurant restaurant = restaurantRepository.findById(menuRequest.getRestaurantId()).get();
         // make food entity
-        MenuItem menuItem = FoodItemTransformer.FoodRequestToFoodItem(menuRequest);
+        MenuItem menuItem = MenuItemTransformer.MenuRequestToMenuItem(menuRequest);
         menuItem.setRestaurant(restaurant);
 
         restaurant.getAvailableMenuItems().add(menuItem);

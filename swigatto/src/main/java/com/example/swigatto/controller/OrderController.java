@@ -21,7 +21,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/place/mobile/{mobile")
+    @PostMapping("/place/mobile/{mobile}")
     public ResponseEntity placeOrder(@PathVariable("mobile")String customerMobile){
 
         try {
