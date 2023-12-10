@@ -6,7 +6,7 @@ public enum FoodCategory {
     MAIN_COURSE,
     CHINESE,
     ITALIAN,
-    DRINKS,
-    DESSERTS,
+    DRINK,
+    DESSERT,
     SOUTH_INDIAN
 }

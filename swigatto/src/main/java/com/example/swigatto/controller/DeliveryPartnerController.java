@@ -27,4 +27,8 @@ public class DeliveryPartnerController {
         return new ResponseEntity(message, HttpStatus.CREATED);
     }
 
+    // give delivery partner with the highest number of orders
+
+    // send an email to all the partners who have done less than 10 deliveries
+
 }
